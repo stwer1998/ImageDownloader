@@ -11,18 +11,28 @@ namespace ImageDownloader.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private DataRepository db;
+        private Downloader dw;
+        public HomeController(DataRepository db,Downloader dw)
         {
-            _logger = logger;
+            this.db = db;
+            this.dw = dw;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(db.GetAllImage());
         }
 
+        public IActionResult AddImage() 
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddImage(string[] links)
+        {
+            return View("Result", dw.Download(links));
+        }
         public IActionResult Privacy()
         {
             return View();

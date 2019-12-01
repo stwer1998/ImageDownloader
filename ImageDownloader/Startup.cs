@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using ImageDownloader.Controllers;
 
 namespace ImageDownloader
 {
@@ -23,6 +25,10 @@ namespace ImageDownloader
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MyDbContext>(option=>option.UseSqlServer(connection));
+            services.AddScoped<DataRepository>();
+            services.AddScoped<Downloader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
