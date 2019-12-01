@@ -16,6 +16,11 @@ namespace ImageDownloader.Controllers
             this.appEnvironment = appEnvironment;
             this.db = db;
         }
+        /// <summary>
+        /// Скачивание изображений
+        /// </summary>
+        /// <param name="links"></param>
+        /// <returns></returns>
         public string Download(string[] links) 
         {
             string result = string.Empty;
@@ -27,7 +32,11 @@ namespace ImageDownloader.Controllers
 
             return result;
         }
-
+        /// <summary>
+        /// Скачивание изображении
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
         private string DownLoadFile(string src)
         {
             if (db.ChackFileUrl(src))
@@ -50,7 +59,10 @@ namespace ImageDownloader.Controllers
             }
             else return src + "  We have this image  ";
         }
-
+        /// <summary>
+        /// Метод будет подбирать имя для файла
+        /// </summary>
+        /// <returns></returns>
         private string Shorter()
         {//создает короткую имя пока не найдет не использованного
             string result = GetUniqueKey(3);
@@ -60,7 +72,11 @@ namespace ImageDownloader.Controllers
             }
             return result;
         }
-
+        /// <summary>
+        /// Генератор случайных строк для имени файла
+        /// </summary>
+        /// <param name="size">число символов</param>
+        /// <returns></returns>
         private string GetUniqueKey(int size)
         {//генератор случайных строк
             char[] chars =
